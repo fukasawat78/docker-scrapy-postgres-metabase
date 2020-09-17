@@ -1,1 +1,1 @@
-# GAS
+# JavaScript
