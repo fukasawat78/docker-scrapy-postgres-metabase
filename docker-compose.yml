@@ -1,46 +1,40 @@
-version: '2'
+version: '3'
 services:
-  scrape-app:
-    container_name: scrape-app
-    build:
-      context : .
-      dockerfile: Dockerfile
-    environment:
-        TZ: "Asia/Tokyo"
-    volumes:
-        - ./scrape/src:/work
-    depends_on:
-        - postgres
-
+services:
   postgres:
-    image: postgres:10.0-alpine
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_WASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+    image: postgres:10.10
     ports:
       - "5432:5432"
-    container_name: postgres-db
     volumes:
-      - ./db:/var/lib/postgresql/data
-      - ./db/initdb:/docker-entrypoint-initdb.d
-    restart: always
-
+      - "./postgres-data/:/var/lib/postgresql/data"
+      - "./initdb:/docker-entrypoint-initdb.d"
+    environment:
+      - POSTGRES_DB=${MB_DB_DBNAME}
+      - POSTGRES_USER=${MB_DB_USER}
+      - POSTGRES_PASSWORD=${MB_DB_PASS}
+      - TZ=Asia/Tokyo
   metabase:
-    image: metabase/metabase
-    container_name: metabase
+    image: metabase/metabase:v0.32.10
     ports:
       - "3000:3000"
     environment:
-      - JAVA_TOOL_OPTIONS=${JAVA_TOOL_OPTIONS}
       - MB_DB_TYPE=${MB_DB_TYPE}
-      - MB_DB_DBNAME=${MB_DB_DBNAME}
+      - MB_DB_HOST=${MB_DB_HOST}
       - MB_DB_PORT=${MB_DB_PORT}
+      - MB_DB_DBNAME=${MB_DB_DBNAME}
       - MB_DB_USER=${MB_DB_USER}
       - MB_DB_PASS=${MB_DB_PASS}
-      - MB_DB_HOST=${MB_DB_HOST}
-    restart: always
+      - JAVA_TOOL_OPTIONS=-Xmx2g
+      - JAVA_TIMEZONE=Asia/Tokyo
+    depends_on:
+      - postgres
 
-volumes:
-  postgres-data:
-    driver: local
+  scrape-app:
+    build: .
+    restart: always
+    container_name: 'python3'
+    volumes:
+      - "./scrape:/opt/app"
+    depends_on:
+      - postgres
+    tty: true
