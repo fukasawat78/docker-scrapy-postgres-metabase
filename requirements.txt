@@ -1,0 +1,6 @@
+pandas
+scrapy
+beautifulsoup4
+pytz
+xlrd
+psycopg2
