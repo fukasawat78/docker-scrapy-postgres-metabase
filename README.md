@@ -2,10 +2,9 @@
 
 ## scrapy
 
-# -*- coding: utf-8 -*-
-
 items.py
 ```
+# -*- coding: utf-8 -*-
 # Define here the models for your scraped items
 #
 # See documentation in:
