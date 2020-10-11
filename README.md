@@ -1,9 +1,14 @@
 # Docker Scrapy-Postgres-Metabase
 
-## scrapy
-
-items.py
+### Docker
 ```
+docker-compose up -d
+```
+
+### scrapy
+
+```
+items.py
 # -*- coding: utf-8 -*-
 # Define here the models for your scraped items
 #
@@ -26,12 +31,12 @@ cd scraper
 scrapy genspider lifehacker www.lifehacker.jp
 ```
 
-lifehacker.py
+
 ```
+lifehacker.py
 # -*- coding: utf-8 -*-
 import scrapy
 from scraper.items import ScraperItem
-
 
 class LifehackerSpider(scrapy.Spider):
     name = 'lifehacker'
@@ -61,8 +66,8 @@ class LifehackerSpider(scrapy.Spider):
         yield item
 ```
 
-settings.py
 ```
+settings.py
 DOWNLOAD_DELAY = 3
 FEED_EXPORT_ENCODING = 'utf-8'
 ITEM_PIPELINES = {
@@ -70,8 +75,8 @@ ITEM_PIPELINES = {
 }
 ```
 
-]pipeline.py
 ```
+pipeline.py
 from configparser import ConfigParser
 import logging
 import psycopg2
@@ -142,8 +147,8 @@ class MachimachiPipeline(object):
             return item
 ```
 
-all_run.py
 ```
+all_run.py
 import subprocess
 import multiprocessing
 
