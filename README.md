@@ -1,9 +1,46 @@
 # Docker Scrapy-Postgres-Metabase
 
-### Docker
-```
-docker-compose up -d
-```
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
+
+* [Scrapy Postgres Metabase](#pytorch-template-project)
+	* [Usage](#how-to-run)
+	* [Organization](#organization)
+    * [Acknowledgements](#acknowledgements)
+
+<!-- /code_chunk_output -->
+
+## Usage
+Try `docker-compose up -d` to run code.
+
+## Organization
+
+  ```
+  docekr-scrapy-postgres-metabase/
+    │
+    ├── Makefile            <- Makefile with commands like `make data` or `make train`
+    ├── README.md           <- The top-level README for developers using this project.
+    │
+    ├── docker-compose.yml  <- YAML to run docker-compose
+    ├── Dockerfile          <- Setup environmemt
+    │
+    ├── scrape/
+    │   ├── scraper
+    │   └── select_sample.py
+    │ 
+    ├── postgres-data/   
+    │ 
+    ├── outputs/
+    │ 
+    ├── initdb/
+    │   └── create_table.sql
+    │ 
+    └── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
+                              generated with `pip freeze > requirements.txt`
+  ```
+  
+## Acknowledgements
 
 ### scrapy
 
@@ -182,15 +219,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-```
-
-## cron実行
-```bash
-$ crontab -e
-```
-
-## crontab
-```bash
-(分)(時)(日)(月)(曜日) 実行するコマンドのパス
-例: 0 7 * * * cd /Users/fukasawat78/Github/python-scrape/; bash -l -c 'python3 /Users/fukasawat78/Github/python-scrape\  web_scraper.py'
 ```
