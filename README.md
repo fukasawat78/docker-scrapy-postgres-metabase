@@ -42,7 +42,7 @@ Try `docker-compose up -d` to run code.
   
 ## Acknowledgements
 
-### scrapy
+## Scrapy
 
 ```
 items.py
